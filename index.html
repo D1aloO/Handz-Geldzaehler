@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Handz Geldzähler</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app" class="container">
+    <header>
+      <div class="title">
+        <div class="logo">HZ</div>
+        <div>
+          <div class="h1">Handz Geldzähler</div>
+          <div class="sub">Mehrere Konten, Ziele & Münz-/Scheineingabe</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="total-card">
+          <div style="text-align:right">
+            <div class="small">Gesamt (alle Konten)</div>
+            <div class="total-amount" id="totalAmount">0,00 €</div>
+          </div>
+        </div>
+        <button id="openCreate" class="create-btn">Konto erstellen</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:800">Deine Konten</div>
+            <div class="muted">Klicke ein Konto, um Münzen/Scheine einzutragen</div>
+          </div>
+          <div class="accounts-list" id="accountsList"></div>
+          <div id="emptyHint" class="muted" style="margin-top:12px">Noch keine Konten — klicke "Konto erstellen" oben rechts.</div>
+        </div>
+
+        <footer>Speichert lokal im Browser • Einfaches Offline-Tool</footer>
+      </section>
+
+      <aside class="card detail" id="detailPane">
+        <div id="detailEmpty">
+          <div style="font-weight:800">Kontodetails</div>
+          <div class="muted" style="margin-top:10px">Wähle links ein Konto, um Münzen und Scheine einzugeben.</div>
+        </div>
+
+        <div id="detailView" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div id="detailName" style="font-weight:800">KONTO NAME</div>
+              <div id="detailGoal" class="muted">Ziel: —</div>
+            </div>
+            <div style="text-align:right">
+              <div class="small">Kontostand</div>
+              <div id="detailAmount" style="font-weight:800;font-size:18px">0,00 €</div>
+            </div>
+          </div>
+
+          <div class="progress" aria-hidden="true">
+            <div class="bar" id="progressBar"></div>
+          </div>
+
+          <div style="margin-top:12px;font-weight:700">Münzen & Scheine eintragen</div>
+          <div class="muted" style="font-size:13px">Gib an, wie viele Stück von jeder Denomination du hinzufügst (ganze Zahlen).</div>
+
+          <form id="denomForm">
+            <div class="denoms" id="denomsGrid"></div>
+            <div style="display:flex;gap:8px;margin-top:10px;justify-content:flex-end">
+              <button type="button" id="applyBtn" class="create-btn">Hinzufügen</button>
+              <button type="button" id="resetBtn" class="ghost">Zurücksetzen</button>
+            </div>
+          </form>
+
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:space-between;align-items:center">
+            <div class="muted">Letzte Änderung: <span id="lastEdited">—</span></div>
+            <div>
+              <button id="editAccount" class="ghost">Bearbeiten</button>
+              <button id="deleteAccount" class="danger">Löschen</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- modal -->
+    <div id="modal" style="display:none" aria-hidden="true">
+      <div class="overlay">
+        <div class="modal">
+          <div style="font-weight:800;margin-bottom:6px">Neues Konto</div>
+          <div class="field">
+            <label>Name</label>
+            <input id="acctName" type="text" placeholder="z. B. Taschengeld" />
+          </div>
+          <div class="field">
+            <label>Zielbetrag (optional) — in €</label>
+            <input id="acctGoal" type="number" step="0.01" placeholder="z. B. 50" />
+          </div>
+          <div class="field">
+            <label>Startbetrag (optional)</label>
+            <input id="acctStart" type="number" step="0.01" placeholder="0.00" />
+          </div>
+          <div class="actions">
+            <button id="cancelCreate" class="ghost">Abbrechen</button>
+            <button id="createAcct" class="create-btn">Erstellen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- edit modal -->
+    <div id="editModal" style="display:none" aria-hidden="true">
+      <div class="overlay">
+        <div class="modal">
+          <div style="font-weight:800;margin-bottom:6px">Konto bearbeiten</div>
+          <div class="field">
+            <label>Name</label>
+            <input id="editName" type="text" />
+          </div>
+          <div class="field">
+            <label>Ziel (in €)</label>
+            <input id="editGoal" type="number" step="0.01" />
+          </div>
+          <div class="actions">
+            <button id="cancelEdit" class="ghost">Abbrechen</button>
+            <button id="saveEdit" class="create-btn">Speichern</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
